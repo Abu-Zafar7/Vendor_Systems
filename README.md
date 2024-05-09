@@ -36,6 +36,8 @@ python manage.py runserver
 ```
 The API will be accessible at http://localhost:8000/.
 
+https://abu-zafar7.github.io/Vendor_Systems/  #link for the api
+
 
 
 
