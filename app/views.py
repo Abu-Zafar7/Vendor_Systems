@@ -30,13 +30,20 @@ class VendorRetrieveUpdateDeleteAPIView(APIView):
 
     def put(self, request, pk):
         vendor = Vendor.objects.get(id=pk)
+        try:
+            vendor = Vendor.objects.get(id=pk)
+        except Vendor.DoesNotExist:
+            return Response({"error": "Vendor not found"}, status=status.HTTP_404_NOT_FOUND)
+        
         serializer = VendorSerializer(vendor, data=request.data)
+
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request, pk):
+        
         vendor = Vendor.objects.get(id = pk)
         vendor.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
@@ -56,12 +63,21 @@ class PurchaseOrderListCreateAPIView(APIView):
 
 class PurchaseOrderRetrieveUpdateDeleteAPIView(APIView):
     def get(self, request, pk):
-        purchase_order = PurchaseOrder.objects.get(id=pk)
+        
+        try:
+            purchase_order = PurchaseOrder.objects.get(id=pk)
+        except PurchaseOrder.DoesNotExist:
+            return Response({"error": "Purchase Order not found"}, status=status.HTTP_404_NOT_FOUND)
+        
         serializer = PurchaseOrderSerializer(purchase_order)
         return Response(serializer.data)
 
     def put(self, request, pk):
-        purchase_order = PurchaseOrder.objects.get(id=pk)
+        try:
+            purchase_order = PurchaseOrder.objects.get(id=pk)
+        except PurchaseOrder.DoesNotExist:
+            return Response({"error": "Purchase Order not found"}, status=status.HTTP_404_NOT_FOUND)
+        
         serializer = PurchaseOrderSerializer(purchase_order, data=request.data)
         if serializer.is_valid():
             serializer.save()

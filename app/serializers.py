@@ -29,12 +29,12 @@ class HistoricalPerformanceSerializer(serializers.ModelSerializer):
 
 class TimedeltaField(serializers.Field):
     def to_representation(self, value):
-        # Check if the value is a timedelta object
+        
         if isinstance(value, timedelta):
-            # Convert timedelta to float representation (in seconds)
+
             return value.total_seconds()
         else:
-            # If the value is not a timedelta object, return None
+            
             return None
 
 class VendorPerformanceSerializer(serializers.Serializer):
